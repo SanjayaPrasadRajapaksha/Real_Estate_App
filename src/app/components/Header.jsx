@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 function Header() {
   return (
@@ -12,32 +13,35 @@ function Header() {
             <span className="text-slate-700">Estate</span>
           </h1>
         </Link>
+
         <form className="bg-slate-100 p-3 rounded-lg flex items-center">
           <input
             type="text"
             placeholder="Search..."
             className="bg-transparent focus:outline-none w-24 sm:w-64"
           />
-          <button>
+          <button type="submit">
             <FaSearch className="text-slate-600" />
           </button>
         </form>
-        <ul className="flex gap-4">
-          <Link href="/">
-            <li className="hidden md:inline text-slate-700 hover:underline">
-              Home
+
+        <ul className="flex gap-4 items-center">
+          <li className="hidden md:inline text-slate-700 hover:underline">
+            <Link href="/">Home</Link>
+          </li>
+          <li className="hidden md:inline text-slate-700 hover:underline">
+            <Link href="/about">About</Link>
+          </li>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+
+          <SignedOut>
+            <li className="hidden md:inline text-slate-700 hover:underline cursor-pointer">
+              <SignInButton />
             </li>
-          </Link>
-          <Link href="/about">
-            <li className="hidden md:inline text-slate-700 hover:underline">
-              About
-            </li>
-          </Link>
-          <Link href="/">
-            <li className="hidden md:inline text-slate-700 hover:underline">
-              Sign In
-            </li>
-          </Link>
+          </SignedOut>
         </ul>
       </div>
     </header>
